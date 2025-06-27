@@ -1,0 +1,11 @@
+.swiper {
+    position: relative;
+}
+
+.swiper-button-prev::after,
+.swiper-button-next::after {
+    position: absolute;
+    bottom: 0;
+    color: #fff;
+    font-size: 25px !important ;
+}
