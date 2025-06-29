@@ -4,6 +4,7 @@ import Contact from "./Pages/Home/Contact";
 import Products from "./Pages/Home/Products";
 import Services from "./Pages/Home/Services";
 import Team from "./Pages/Home/Team";
+import WhyChoose from "./Pages/Home/WhyChoose";
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
       <Contact />
       <Products />
       <Team />
+      <WhyChoose />
     </div>
   );
 };
