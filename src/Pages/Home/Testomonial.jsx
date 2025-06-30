@@ -61,7 +61,7 @@ const Testimonial = () => {
    return (
       <Swiper
          loop={true}
-         speed={1500}
+         speed={3000}
          autoplay={{
             delay: 2500,
             disableOnInteraction: false,
