@@ -6,14 +6,14 @@ import logo from '../../assets/logo.svg'
 
 const Navbar = () => {
    const navLinks = <>
-      <li><Link>Home</Link></li>
+      <li><Link to={'/'}>Home</Link></li>
       <li><Link>About</Link></li>
       <li><Link>Services</Link></li>
       <li><Link>Blog</Link></li>
       <li><Link>Contact</Link></li>
    </>
    return (
-      <div className="navbar bg-gray-50/90 text-black shadow-sm font-Onset md:px-6">
+      <div className="navbar bg-gray-50/90 text-black shadow-sm font-Onset md:px-6 sticky top-0 z-50">
          <div className="navbar-start">
             <div className="dropdown">
                <div tabIndex={0} role="button" className=" opacity-60 lg:hidden me-2">
@@ -21,7 +21,7 @@ const Navbar = () => {
                </div>
                <ul
                   tabIndex={0}
-                  className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow uppercase">
+                  className="menu menu-sm dropdown-content bg-gray-200 rounded-box z-1 mt-3 w-52 p-2 shadow uppercase">
                   {navLinks}
                </ul>
             </div>

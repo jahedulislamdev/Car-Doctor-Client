@@ -1,0 +1,21 @@
+import { useRouteError } from 'react-router-dom';
+import notFoundImg from '../../assets/images/Not Found/not found.png'
+const NotFound = () => {
+   const listenErr = useRouteError();
+   return (
+      <>
+         {
+            listenErr.status === 404 ?
+               <div className="bg-white h-screen flex justify-center items-center space-x-2">
+                  <img src={notFoundImg} alt="" />
+               </div> :
+               <div className="bg-[#0F172A] h-screen flex justify-center items-center space-x-2">
+                  <p className="text-2xl font-bold border-e pe-4">{listenErr.status}</p>
+                  <p className="text-xs sm:text-lg md:text-xl font-semibold text-red-600">Application error: a client-side exception has occurred (see the browser console for more information).</p>
+               </div>
+         }
+      </>
+   );
+};
+
+export default NotFound;

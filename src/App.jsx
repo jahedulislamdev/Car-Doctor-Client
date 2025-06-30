@@ -8,8 +8,9 @@ import Team from "./Pages/Home/Team";
 import WhyChoose from "./Pages/Home/WhyChoose";
 
 const App = () => {
+
   return (
-    <div >
+    <div>
       <Banner />
       <About />
       <Services />
