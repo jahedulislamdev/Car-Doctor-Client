@@ -1,7 +1,81 @@
+import { useState } from "react";
 import AuthContext from "./context";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, FacebookAuthProvider, signOut } from "firebase/auth";
+import app from "../Firebase/config";
 
 const Auth = ({ children }) => {
-   const providedData = 'xyz'
+   const [loading, setLoading] = useState(false);
+   const [user, setUser] = useState(null);
+
+   // getauth app
+   const auth = getAuth(app);
+
+   // login and register using email and password
+   const registrationWithEmail = async (email, pass) => {
+      setLoading(true)
+      return await createUserWithEmailAndPassword(auth, email, pass)
+         .finally(() => setLoading(false));
+   }
+   const loginWithEmail = async (email, pass) => {
+      setLoading(true)
+      return await signInWithEmailAndPassword(auth, email, pass)
+         .finally(() => setLoading(false))
+   }
+
+   // login with google 
+   const googleAuthProvider = new GoogleAuthProvider();
+   const loginWithGoogle = (navigate) => {
+      setLoading(true);
+      signInWithPopup(auth, googleAuthProvider)
+         .then(res => {
+            setUser(res.user)
+            console.log(res.user)
+         })
+         .catch(err => console.error(err))
+         .finally(() => {
+            setLoading(false)
+            navigate('/')
+         })
+
+   }
+   // login with facebook
+   const facebookProvider = new FacebookAuthProvider();
+   const loginWithFacebook = (navigate) => {
+      setLoading(true)
+      signInWithPopup(auth, facebookProvider)
+         .then(res => {
+            setUser(res.user)
+            console.log(res.user)
+         })
+         .catch(err => console.error(err))
+         .finally(() => {
+            setLoading(false)
+            navigate('/')
+         })
+   }
+
+   // signout
+   const signOutUser = (navigate) => {
+      setLoading(true)
+      signOut(auth)
+         .then(res => {
+            setUser(null);
+            console.log("Logout successfully", res.user);
+         })
+         .catch(err => console.log("signout faild", err))
+         .finally(() => {
+            setLoading(false)
+            navigate('/');
+         })
+   }
+
+   // provided data
+   const providedData = {
+      user, setUser,
+      loading, setLoading,
+      registrationWithEmail, loginWithEmail, loginWithGoogle, loginWithFacebook,
+      signOutUser
+   }
    return (
       <AuthContext.Provider value={providedData}>
          {children}
