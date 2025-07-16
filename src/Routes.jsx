@@ -7,6 +7,7 @@ import SignUp from "./Pages/Registration/SignUp";
 import NotFound from "./Components/Error/NotFound";
 import Services from "./Pages/Home/Services";
 import ServiceDetail from "./Pages/Home/ServiceDetail";
+import Checkout from "./Pages/Checkout/Checkout";
 
 const route = createBrowserRouter([
    {
@@ -35,6 +36,11 @@ const route = createBrowserRouter([
          },
          {
             path: '/service/:id', element: <ServiceDetail />,
+            loader: ({ params }) => fetch(`http://localhost:5000/services/${params.id}`),
+            hydrateFallbackElement: <Spinar />
+         },
+         {
+            path: '/checkout/:id', element: <Checkout />,
             loader: ({ params }) => fetch(`http://localhost:5000/services/${params.id}`),
             hydrateFallbackElement: <Spinar />
          }

@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import headingBackground from '../../assets/images/checkout/checkout.png'
 import logo from '../../assets/logo.png'
 import { IoIosArrowRoundForward } from "react-icons/io";
@@ -126,7 +126,9 @@ const ServiceDetail = () => {
                      </div>
                   </div>
                   <h1 className="font-bold text-3xl text-center py-7">Price: ${selectedServices.price}</h1>
-                  <button className="w-full bg-orange-600 text-white p-3 cursor-pointer rounded">Proceed Checkout</button>
+                  <div className="flex justify-center items-center text-center">
+                     <Link to={`/checkout/${selectedServices._id}`} className="w-full bg-orange-600 hover:bg-orange-800 transition-colors duration-300 text-white p-3 cursor-pointer rounded">Proceed Checkout</Link>
+                  </div>
                </div>
             </div>
          </div>
