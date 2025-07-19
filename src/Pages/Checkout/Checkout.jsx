@@ -80,6 +80,10 @@ const Checkout = () => {
                </div>
                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
+                     <label className="label p-2">Service Name</label>
+                     <input type="text" name="services_name" readOnly defaultValue={checkedServices?.title} className="input  bg-white input-bordered w-full" />
+                  </div>
+                  <div>
                      <label className="label p-2">Due Amount </label>
                      <input
                         defaultValue={checkedServices?.price}
@@ -88,10 +92,6 @@ const Checkout = () => {
                         className="input  bg-white input-bordered w-full"
                         maxLength={11}
                      />
-                  </div>
-                  <div>
-                     <label className="label p-2">Email Address</label>
-                     <input type="checkbox" className="checkbox" />
                   </div>
                </div>
                <textarea

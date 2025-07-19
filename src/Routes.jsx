@@ -8,6 +8,7 @@ import NotFound from "./Components/Error/NotFound";
 import Services from "./Pages/Home/Services";
 import ServiceDetail from "./Pages/Home/ServiceDetail";
 import Checkout from "./Pages/Checkout/Checkout";
+import AddServices from "./Pages/Add Services/AddServices";
 
 const route = createBrowserRouter([
    {
@@ -42,6 +43,10 @@ const route = createBrowserRouter([
          {
             path: '/checkout/:id', element: <Checkout />,
             loader: ({ params }) => fetch(`http://localhost:5000/services/${params.id}`),
+            hydrateFallbackElement: <Spinar />
+         },
+         {
+            path: '/add-services', element: <AddServices />,
             hydrateFallbackElement: <Spinar />
          }
       ],
