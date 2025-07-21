@@ -11,15 +11,18 @@ const Checkout = () => {
       const emailAddress = form.emailAddress.value;
       const message = form.message.value;
 
-      const orderData = {
-         customerName,
-         serviceDate,
-         contactNumber,
-         emailAddress,
-         message,
-      };
+      const orderData = { customerName, serviceDate, contactNumber, emailAddress, message, };
 
       console.log("Form submitted", orderData);
+      fetch("http://localhost:5000/orders", {
+         method: "POST",
+         headers: {
+            'Content-Type': 'application/json',
+         },
+         body: JSON.stringify(orderData),
+      })
+         .then(res => res.json())
+         .catch(err => console.error(err))
    }
    return (
       <div className="bg-white text-gray-900 md:py-7 px-4 md:px-10 font-Onset">
