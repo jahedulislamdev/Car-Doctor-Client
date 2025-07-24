@@ -1,19 +1,34 @@
 import { useLoaderData } from "react-router";
 import headingBackground from '../../assets/images/checkout/checkout.png'
+import toast from "react-hot-toast";
 const Checkout = () => {
    const checkedServices = useLoaderData();
    const submitHandler = (e) => {
       e.preventDefault();
       const form = e.target;
-      const customerName = form.customerName.value;
+      const customerName = form.customerName.value.trim();
       const serviceDate = form.serviceDate.value;
-      const contactNumber = form.contactNumber.value;
-      const emailAddress = form.emailAddress.value;
-      const message = form.message.value;
+      const contactNumber = form.contactNumber.value.trim();
+      const emailAddress = form.emailAddress.value.trim();
+      const message = form.message.value.trim();
+      const serviceName = form.services_name.value;
+      const serviceCharge = form.serviceCharge.value;
+      const serviceImg = checkedServices.img;
 
-      const orderData = { customerName, serviceDate, contactNumber, emailAddress, message, };
+      // Validation checks
+      if (!/^01\d{9}$/.test(contactNumber)) return toast.error("Valid 11-digit contact number required (e.g., 018XXXXXXXX)");
 
-      console.log("Form submitted", orderData);
+      const orderData = {
+         customerName,
+         serviceDate,
+         contactNumber,
+         emailAddress,
+         message,
+         serviceName,
+         serviceCharge,
+         serviceImg
+      };
+
       fetch("http://localhost:5000/orders", {
          method: "POST",
          headers: {
@@ -22,8 +37,20 @@ const Checkout = () => {
          body: JSON.stringify(orderData),
       })
          .then(res => res.json())
-         .catch(err => console.error(err))
-   }
+         .then(data => {
+            if (data.insertedId) {
+               toast.success("Order placed successfully!");
+               form.reset();
+            } else {
+               toast.error("Failed to place order. Try again.");
+            }
+         })
+         .catch(err => {
+            console.error(err);
+            toast("🚨 Server error occurred!");
+         });
+   };
+
    return (
       <div className="bg-white text-gray-900 md:py-7 px-4 md:px-10 font-Onset">
          <div className="h-40 flex items-center justify-center bg-white mb-4 rounded-lg" style={{ backgroundImage: `url(${headingBackground})`, backgroundSize: 'cover', opacity: 0.9, backgroundPosition: 'center' }}>
@@ -48,6 +75,7 @@ const Checkout = () => {
                         name="customerName"
                         placeholder="Customer Name"
                         className="input bg-white input-bordered w-full"
+                        required
                      />
                   </div>
                   <div>
@@ -57,6 +85,7 @@ const Checkout = () => {
                         name="serviceDate"
                         placeholder="Service Date"
                         className="input bg-white input-bordered w-full"
+                        required
                      />
                   </div>
                </div>
@@ -68,7 +97,9 @@ const Checkout = () => {
                         name="contactNumber"
                         placeholder="018XXXXXXXXX"
                         className="input  bg-white input-bordered w-full"
+                        minLength={11}
                         maxLength={11}
+                        required
                      />
                   </div>
                   <div>
@@ -78,6 +109,7 @@ const Checkout = () => {
                         name="emailAddress"
                         placeholder="example@gmail.com"
                         className="input bg-white input-bordered w-full"
+                        required
                      />
                   </div>
                </div>
@@ -93,13 +125,12 @@ const Checkout = () => {
                         readOnly
                         name="serviceCharge"
                         className="input  bg-white input-bordered w-full"
-                        maxLength={11}
                      />
                   </div>
                </div>
                <textarea
                   className="textarea bg-white textarea-bordered w-full min-h-[100px]"
-                  placeholder="Your Message"
+                  placeholder="Your Message (optional)"
                   name="message"
                >
 

@@ -3,14 +3,17 @@ import { IoIosSearch } from "react-icons/io";
 import { IoBagRemoveOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import logo from '../../assets/logo.svg'
+import { useContext } from "react";
+import AuthContext from "../../Provider/context";
 
 const Navbar = () => {
+   const { user, signOutUser } = useContext(AuthContext)
    const navLinks = <>
       <li><Link to={'/'}>Home</Link></li>
       <li><Link>About</Link></li>
       <li><Link>Services</Link></li>
-      <li><Link>Blog</Link></li>
-      <li><Link>Contact</Link></li>
+      <li><Link to={"/orders"}>My Orders</Link></li>
+      {user ? <li><button onClick={signOutUser}>Logout</button></li> : <li><Link to={'/signin'}>Login</Link></li>}
    </>
    return (
       <div className="navbar bg-gray-50/90 text-black shadow-sm font-Onset md:px-6 sticky top-0 z-50">
@@ -35,7 +38,8 @@ const Navbar = () => {
          <div className="navbar-end md:space-x-5 space-x-2 ">
             <Link><IoBagRemoveOutline className="size-5" /></Link>
             <Link><IoIosSearch className="size-5" /></Link>
-            <Link className=" bg-orange-700 btn btn-sm border-0 md:btn-md shadow-none"> Appointment</Link>
+            <Link className="bg-[#e17f2996] btn btn-sm border-0 md:btn-md shadow-none text-black"> Appointment</Link>
+
          </div>
       </div>
    );

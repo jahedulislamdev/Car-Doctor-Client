@@ -20,7 +20,11 @@ const SignUp = () => {
             console.log("registration successfully", res.user)
             navigate('/signin')
          })
-         .catch(err => console.log(err.code))
+         .catch(err => {
+            if (err.code === "auth/email-already-in-use") {
+               toast.error("Email Alreadry Registard!")
+            }
+         })
 
       console.log(registerInfo);
    }

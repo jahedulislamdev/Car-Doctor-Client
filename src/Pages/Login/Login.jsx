@@ -3,14 +3,13 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 import loginBanner from '../../assets/images/login/login.svg';
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import AuthContext from "../../Provider/context";
 import toast from "react-hot-toast";
 
 const Login = () => {
    const {
       setUser,
-      user,
       loginWithEmail,
       loginWithGoogle,
       loginWithFacebook,
@@ -19,16 +18,6 @@ const Login = () => {
 
    const navigate = useNavigate();
    const [showPass, setShowPass] = useState(false);
-
-   // Show warning if already logged in
-   useEffect(() => {
-      if (user) {
-         toast.error("Already Logged In", {
-            style: { background: "#facc15", color: "#000" }
-         });
-         navigate("/");
-      }
-   }, [user, navigate]);
 
    // Handle form submit
    const handleFormSubmit = (e) => {
@@ -39,8 +28,10 @@ const Login = () => {
       loginWithEmail(email, password)
          .then(res => {
             toast.success("Sign In successfully");
-            setUser(res.user);
-            navigate('/');
+            setTimeout(() => {
+               setUser(res.user);
+               navigate('/');
+            }, 400);
          })
          .catch(error => {
             toast.error("Login Failed, Please try Again!");

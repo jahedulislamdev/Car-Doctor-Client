@@ -2,6 +2,7 @@ import { useState } from "react";
 import AuthContext from "./context";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, FacebookAuthProvider, signOut } from "firebase/auth";
 import app from "../Firebase/config";
+import toast from "react-hot-toast";
 
 const Auth = ({ children }) => {
    const [loading, setLoading] = useState(false);
@@ -29,9 +30,9 @@ const Auth = ({ children }) => {
       signInWithPopup(auth, googleAuthProvider)
          .then(res => {
             setUser(res.user)
-            console.log(res.user)
+            toast.success("Login Successfully!")
          })
-         .catch(err => console.error(err))
+         .catch(err => toast.error(err))
          .finally(() => {
             setLoading(false)
             navigate('/')
@@ -45,9 +46,9 @@ const Auth = ({ children }) => {
       signInWithPopup(auth, facebookProvider)
          .then(res => {
             setUser(res.user)
-            console.log(res.user)
+            toast.success("Login Successfully!")
          })
-         .catch(err => console.error(err))
+         .catch(err => toast.error(err))
          .finally(() => {
             setLoading(false)
             navigate('/')
@@ -58,11 +59,11 @@ const Auth = ({ children }) => {
    const signOutUser = (navigate) => {
       setLoading(true)
       signOut(auth)
-         .then(res => {
+         .then(() => {
             setUser(null);
-            console.log("Logout successfully", res.user);
+            toast.success("Logout Successfully!")
          })
-         .catch(err => console.log("signout faild", err))
+         .catch(err => toast.error("signout faild", err))
          .finally(() => {
             setLoading(false)
             navigate('/');

@@ -9,6 +9,8 @@ import Services from "./Pages/Home/Services";
 import ServiceDetail from "./Pages/Home/ServiceDetail";
 import Checkout from "./Pages/Checkout/Checkout";
 import AddServices from "./Pages/Add Services/AddServices";
+import Orders from "./Pages/My Orders/Orders";
+import ServicesDashboard from "./Pages/Add Services/ServicesDashboard";
 
 const route = createBrowserRouter([
    {
@@ -47,6 +49,16 @@ const route = createBrowserRouter([
          },
          {
             path: '/add-services', element: <AddServices />,
+            hydrateFallbackElement: <Spinar />
+         },
+         {
+            path: "/orders", element: <Orders />,
+            loader: () => fetch("http://localhost:5000/orders"),
+            hydrateFallbackElement: <Spinar />
+         },
+         {
+            path: "services-dashboard", element: <ServicesDashboard />,
+            loader: () => fetch("http://localhost:5000/services"),
             hydrateFallbackElement: <Spinar />
          }
       ],

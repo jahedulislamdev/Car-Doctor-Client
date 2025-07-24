@@ -12,7 +12,7 @@ const Services = () => {
          </div>
 
          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services?.map((service, index) => (
+            {services?.slice(0, 3).map((service, index) => (
                <Link to={`/service/${service._id}`}
                   key={index}
                   className="bg-gradient-to-b from-cyan-50 to-gray-50 rounded-xl shadow-md hover:shadow-lg transition duration-300 border border-gray-200 overflow-hidden"
