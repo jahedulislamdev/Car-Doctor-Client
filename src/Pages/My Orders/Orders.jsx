@@ -1,16 +1,42 @@
 import { useLoaderData } from 'react-router';
 import { MdDelete } from 'react-icons/md';
 import { PiEyeThin } from 'react-icons/pi';
+import Swal from 'sweetalert2';
 
 const Orders = () => {
    const orderList = useLoaderData();
-   console.log(orderList);
+
+   const handleDeleteOrder = (orderId) => {
+      Swal.fire({
+         title: "Are you sure?",
+         showCancelButton: true,
+         confirmButtonText: "Delete",
+         confirmButtonColor: '#d33',
+      }).then((result) => {
+         if (result.isConfirmed) {
+            fetch(`http://localhost:5000/order/${orderId}`, {
+               method: "DELETE",
+               headers: {
+                  'Content-Type': 'application/json',
+               },
+            }).then(res => res.json()).then(data => {
+               if (data.deletedCount > 0) {
+                  Swal.fire({
+                     title: "Order Deleted Successfully!"
+                  })
+               }
+            })
+
+         }
+      });
+   }
+
    return (
       <div className='bg-white text-gray-800'>
          <div className="breadcrumbs text-sm flex items-center">
             <ul>
                <li><a>Dashboard</a></li>
-               <li><a>All Order</a></li>
+               <li><a>All Order({orderList.length})</a></li>
             </ul>
          </div>
          <div className="overflow-x-auto py-3">
@@ -27,7 +53,12 @@ const Orders = () => {
                   </tr>
                </thead>
                <tbody>
-                  {
+                  {orderList.length < 1 ?
+                     <tr>
+                        <td colSpan="7" className="text-center py-4 text-gray-500 text-xl font-medium">
+                           Your order list is currently empty!
+                        </td>
+                     </tr> :
                      orderList.map((order) => (
                         <tr key={order._id} className='hover:bg-gray-100 transition duration-300'>
                            <td className='uppercase'>{order._id.slice(-5)}</td>
@@ -54,7 +85,7 @@ const Orders = () => {
                            <th>
                               <div className='flex items-center gap-2'>
                                  <button className="bg-gray-600 text-white cursor-pointer p-1 rounded shadow"><PiEyeThin className='size-5' /></button>
-                                 <button className='bg-red-500 text-white p-1 rounded cursor-pointer'><MdDelete className='size-5' /></button>
+                                 <button onClick={() => handleDeleteOrder(order._id)} className='bg-red-500 text-white p-1 rounded cursor-pointer'><MdDelete className='size-5' /></button>
                               </div>
                            </th>
                            <th>

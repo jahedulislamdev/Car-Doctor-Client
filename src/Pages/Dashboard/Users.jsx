@@ -1,5 +1,3 @@
-import React from 'react';
-
 const Users = () => {
    return (
       <div className="overflow-auto max-h-[100vh] bg-white text-black">
