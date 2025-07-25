@@ -12,8 +12,10 @@ const Navbar = () => {
       <li><Link to={'/'}>Home</Link></li>
       <li><Link>About</Link></li>
       <li><Link>Services</Link></li>
+      <li><Link to={""}>Dashboard</Link></li>
       <li><Link to={"/orders"}>My Orders</Link></li>
-      {user ? <li><button onClick={signOutUser}>Logout</button></li> : <li><Link to={'/signin'}>Login</Link></li>}
+      {user ? <li><button onClick={signOutUser}>Logout</button></li>
+         : <li><Link to={'/signin'}>Login</Link></li>}
    </>
    return (
       <div className="navbar bg-gray-50/90 text-black shadow-sm font-Onset md:px-6 sticky top-0 z-50">

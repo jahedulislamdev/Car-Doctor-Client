@@ -1,8 +1,9 @@
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import headingBackground from '../../assets/images/checkout/checkout.png'
 import toast from "react-hot-toast";
 const Checkout = () => {
    const checkedServices = useLoaderData();
+   const navigate = useNavigate()
    const submitHandler = (e) => {
       e.preventDefault();
       const form = e.target;
@@ -41,6 +42,7 @@ const Checkout = () => {
             if (data.insertedId) {
                toast.success("Order placed successfully!");
                form.reset();
+               navigate('/')
             } else {
                toast.error("Failed to place order. Try again.");
             }
@@ -50,6 +52,7 @@ const Checkout = () => {
             toast("🚨 Server error occurred!");
          });
    };
+   const today = new Date().toISOString().split("T")[0];
 
    return (
       <div className="bg-white text-gray-900 md:py-7 px-4 md:px-10 font-Onset">
@@ -81,11 +84,10 @@ const Checkout = () => {
                   <div>
                      <label className="label p-2">Service Date</label>
                      <input
-                        type="date"
                         name="serviceDate"
-                        placeholder="Service Date"
+                        placeholder={today}
                         className="input bg-white input-bordered w-full"
-                        required
+                        readOnly
                      />
                   </div>
                </div>

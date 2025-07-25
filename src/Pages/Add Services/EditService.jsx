@@ -1,13 +1,26 @@
-import { useState } from "react";
-import headingBackground from '../../assets/images/checkout/checkout.png';
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { MdDelete } from "react-icons/md";
+import { Link, useLoaderData, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 
-const AddServices = () => {
+const EditService = () => {
+   const service = useLoaderData();
+   const navigate = useNavigate()
+
+   // State for facilities
    const [facilities, setFacilities] = useState([]);
    const [facilityName, setFacilityName] = useState('');
    const [facilityDetails, setFacilityDetails] = useState('');
 
+   // add previously added facilities 
+   useEffect(() => {
+      if (service.facility) {
+         setFacilities(service.facility)
+      }
+   }, [service.facility])
+
+   // add facility function
    const addFacility = () => {
       if (facilityName && facilityDetails) {
          setFacilities([...facilities, { name: facilityName, details: facilityDetails }]);
@@ -15,7 +28,7 @@ const AddServices = () => {
          setFacilityDetails('');
       }
    };
-
+   // remove facility function
    const removeFacility = (index) => {
       Swal.fire({
          title: "Are you sure?",
@@ -34,48 +47,42 @@ const AddServices = () => {
 
    const submitHandler = (e) => {
       e.preventDefault();
+      e.preventDefault();
       const form = e.target;
       const title = form.serviceName.value;
       const price = form.servicePrice.value;
       const shortDescription = form.shortText.value;
       const img = form.img.value;
 
-      const newService = {
+      const updatedService = {
          title,
          img,
          price,
          shortDescription,
          facility: facilities,
       };
-
-      console.log("New Service Added", newService);
-      fetch("http://localhost:5000/services", {
-         method: "POST",
+      console.log(updatedService);
+      fetch(`http://localhost:5000/services/edit/${service._id}`, {
+         method: "PUT",
          headers: {
             'Content-Type': 'application/json',
          },
-         body: JSON.stringify(newService)
+         body: JSON.stringify(updatedService),
+      }).then(res => res.json()).then(data => {
+         if (data.modifiedCount > 0) {
+            toast.success("Service updated successfully!");
+            navigate('/services-dashboard');
+         }
       })
-         .then(res => res.json())
-         .then(data => {
-            if (data.acknowledged === true) {
-               alert("New Service Added Successfully!")
-            }
-         })
-         .catch(err => console.error(err))
-   };
-
+         .catch(err => console.error(err));
+   }
    return (
       <div className="bg-white text-gray-900 md:py-7 px-4 md:px-10 font-Onset">
-         <div className="h-40 flex items-center justify-center bg-white mb-4 rounded-lg" style={{ backgroundImage: `url(${headingBackground})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
-            <div className="bg-gray-900/70 w-full h-full flex items-center justify-center text-white rounded-lg">
-               <h1 className="font-semibold text-3xl">Add New Service</h1>
-            </div>
-         </div>
          <div className="breadcrumbs text-sm flex justify-center items-center">
             <ul>
-               <li><a>Services</a></li>
-               <li><a>Add New Service</a></li>
+               <li><Link to={'/services-dashboard'}>Services</Link></li>
+               <li><a href="#">Edit</a></li>
+               <li>{service.title}</li>
             </ul>
          </div>
          <div className="p-10 mt-6 max-w-4xl mx-auto bg-gray-100 rounded-lg border border-gray-400/30">
@@ -83,21 +90,21 @@ const AddServices = () => {
                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                      <label className="label font-semibold p-2"> Name *</label>
-                     <input type="text" name="serviceName" required placeholder=" Service Name" className="input bg-white input-bordered w-full" />
+                     <input type="text" name="serviceName" required defaultValue={service.title} className="input bg-white input-bordered w-full" />
                   </div>
                   <div>
                      <label className="label font-semibold p-2">Service price *</label>
-                     <input type="number" required name="servicePrice" placeholder=" Service Price" className="input bg-white input-bordered w-full" />
+                     <input type="number" required name="servicePrice" defaultValue={service.price} className="input bg-white input-bordered w-full" />
                   </div>
                </div>
                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                      <label className="label font-semibold p-2">Short Description *</label>
-                     <input type="text" required name="shortText" placeholder=" Short Services Description" className="input bg-white input-bordered w-full" maxLength={50} />
+                     <input type="text" name="shortText" placeholder="Short Message" defaultValue={service.shortText} className="input bg-white input-bordered w-full" maxLength={50} />
                   </div>
                   <div>
                      <label className="label font-semibold p-2">Image *</label>
-                     <input type="url" required name="img" placeholder="https://" className="input bg-white input-bordered w-full" />
+                     <input type="url" required name="img" defaultValue={service.img} className="input bg-white input-bordered w-full" />
                   </div>
                </div>
 
@@ -120,7 +127,7 @@ const AddServices = () => {
                         placeholder=" Facility Details"
                         className="input bg-white input-bordered w-full"
                      />
-                     <button type="button" onClick={addFacility} className="text-nowrap cursor-pointer bg-orange-500 hover:bg-orange-700 transition-colors duration-200 text-white px-4 py-2 rounded">
+                     <button type="button" onClick={addFacility} className="text-nowrap cursor-pointer bg-cyan-700 hover:bg-cyan-800 transition-colors duration-200 text-white px-4 py-2 rounded">
                         + Add Facility
                      </button>
                   </div>
@@ -140,13 +147,13 @@ const AddServices = () => {
                   )}
                </div>
 
-               <textarea className="textarea bg-white textarea-bordered w-full min-h-[100px]" placeholder="Product Description" name="description" />
+               <textarea required className="textarea bg-white textarea-bordered w-full min-h-[100px]" defaultValue={service.description} name="description" />
 
-               <button className="w-full bg-orange-700 hover:bg-orange-800 transition-colors duration-300 text-white p-3 cursor-pointer rounded">Add</button>
+               <button className="w-full bg-cyan-700 hover:bg-cyan-800 transition-colors duration-300 text-white p-3 cursor-pointer rounded">Update</button>
             </form>
          </div>
       </div>
    );
 };
 
-export default AddServices;
+export default EditService;
