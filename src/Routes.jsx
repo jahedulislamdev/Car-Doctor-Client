@@ -12,13 +12,16 @@ import AddServices from "./Pages/Add Services/AddServices";
 import Orders from "./Pages/My Orders/Orders";
 import ServicesDashboard from "./Pages/Add Services/ServicesDashboard";
 import EditService from "./Pages/Add Services/EditService";
+import Dashboard from "./Pages/Dashboard/Dashboard";
+import Overview from "./Pages/Dashboard/Overview";
+import Users from "./Pages/Dashboard/Users";
 
 const route = createBrowserRouter([
    {
       path: '/',
       element: <Root />,
       hydrateFallbackElement: <Spinar />,
-      // errorElement: <NotFound />,
+      errorElement: <NotFound />,
       children: [
          {
             path: '/', element: <App />,
@@ -48,25 +51,44 @@ const route = createBrowserRouter([
             loader: ({ params }) => fetch(`http://localhost:5000/services/${params.id}`),
             hydrateFallbackElement: <Spinar />
          },
+
          {
-            path: '/add-services', element: <AddServices />,
-            hydrateFallbackElement: <Spinar />
-         },
-         {
-            path: "/orders", element: <Orders />,
-            loader: () => fetch("http://localhost:5000/orders"),
-            hydrateFallbackElement: <Spinar />
-         },
-         {
-            path: "services-dashboard", element: <ServicesDashboard />,
-            loader: () => fetch("http://localhost:5000/services"),
-            hydrateFallbackElement: <Spinar />
-         },
-         {
-            path: '/services/edit/:id', element: <EditService />,
-            loader: ({ params }) => fetch(`http://localhost:5000/services/${params.id}`),
-            hydrateFallbackElement: <Spinar />
+            path: "/dashboard", element: <Dashboard />,
+            hydrateFallbackElement: <Spinar />,
+            children: [
+               {
+                  index: true,
+                  element: <Overview />
+               },
+               {
+                  path: "orders", element: <Orders />,
+                  loader: () => fetch("http://localhost:5000/orders"),
+                  hydrateFallbackElement: <Spinar />
+               },
+               {
+                  path: 'add-services', element: <AddServices />,
+                  hydrateFallbackElement: <Spinar />
+               },
+               {
+                  path: "services", element: <ServicesDashboard />,
+                  loader: () => fetch("http://localhost:5000/services"),
+                  hydrateFallbackElement: <Spinar />
+               },
+               {
+                  path: 'services/edit/:id', element: <EditService />,
+                  loader: ({ params }) => fetch(`http://localhost:5000/services/${params.id}`),
+                  hydrateFallbackElement: <Spinar />
+               },
+               {
+                  path: 'users', element: <Users />,
+                  hydrateFallbackElement: <Spinar />
+
+               }
+
+            ]
          }
+
+
       ],
    }
 ])

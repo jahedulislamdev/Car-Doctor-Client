@@ -1,5 +1,4 @@
 import { useState } from "react";
-import headingBackground from '../../assets/images/checkout/checkout.png';
 import { MdDelete } from "react-icons/md";
 import Swal from "sweetalert2";
 
@@ -66,19 +65,14 @@ const AddServices = () => {
    };
 
    return (
-      <div className="bg-white text-gray-900 md:py-7 px-4 md:px-10 font-Onset">
-         <div className="h-40 flex items-center justify-center bg-white mb-4 rounded-lg" style={{ backgroundImage: `url(${headingBackground})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
-            <div className="bg-gray-900/70 w-full h-full flex items-center justify-center text-white rounded-lg">
-               <h1 className="font-semibold text-3xl">Add New Service</h1>
-            </div>
-         </div>
-         <div className="breadcrumbs text-sm flex justify-center items-center">
+      <div className="bg-white text-gray-900 font-Onset">
+         <div className="breadcrumbs text-sm flex items-center">
             <ul>
-               <li><a>Services</a></li>
+               <li><a>Dashboard</a></li>
                <li><a>Add New Service</a></li>
             </ul>
          </div>
-         <div className="p-10 mt-6 max-w-4xl mx-auto bg-gray-100 rounded-lg border border-gray-400/30">
+         <div className="p-4 mt-4 md:max-w-4xl md:mx-auto bg-gray-100 rounded-lg border border-gray-400/30">
             <form onSubmit={submitHandler} className="space-y-4">
                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
@@ -105,7 +99,7 @@ const AddServices = () => {
                {/* Facility inputs */}
                <div className="border border-gray-300 p-4 rounded bg-gray-100">
                   <label className="label p-2 font-semibold">Facilities</label>
-                  <div className="flex justify-center items-center gap-4">
+                  <div className="md:flex justify-center items-center gap-4 space-y-3">
                      <input
                         type="text"
                         value={facilityName}

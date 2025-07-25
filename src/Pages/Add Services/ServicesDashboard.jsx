@@ -7,9 +7,14 @@ const ServicesDashboard = () => {
    console.log(services);
 
    return (
-      <div className='bg-white p-3 text-gray-800'>
-         <h1 className="font-semibold text-3xl text-center py-4">Manage your Services</h1>
-         <div className="overflow-x-auto py-10">
+      <div className='bg-white text-gray-800'>
+         <div className="breadcrumbs text-sm flex items-center">
+            <ul>
+               <li><a>Dashboard</a></li>
+               <li><a>All Service</a></li>
+            </ul>
+         </div>
+         <div className="overflow-x-auto py-3">
             <table className="table">
                {/* head */}
                <thead className=' text-gray-800 shadow'>
@@ -46,14 +51,14 @@ const ServicesDashboard = () => {
 
                            <th>
                               <div className='flex items-center gap-2'>
-                                 <Link to={`/services/edit/${service._id}`} className="bg-black text-white p-1 rounded cursor-pointer"><TbEdit className='size-5' /></Link>
+                                 <Link to={`/dashboard/services/edit/${service._id}`} className="bg-black text-white p-1 rounded cursor-pointer"><TbEdit className='size-5' /></Link>
                                  <button className='bg-red-500 text-white p-1 rounded cursor-pointer'><MdDelete className='size-5' /></button>
                               </div>
                            </th>
                            <th>
                               <select name="status" className='border p-1 rounded bg-white'>
-                                 <option value="pending">Pending</option>
-                                 <option value="in-progress">Approved</option>
+                                 <option value="in-progress">Active</option>
+                                 <option value="pending">Disable</option>
                               </select>
                            </th>
                         </tr>

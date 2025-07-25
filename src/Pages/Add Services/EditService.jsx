@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 
 const EditService = () => {
    const service = useLoaderData();
+   console.log(service)
    const navigate = useNavigate()
 
    // State for facilities
@@ -53,6 +54,7 @@ const EditService = () => {
       const price = form.servicePrice.value;
       const shortDescription = form.shortText.value;
       const img = form.img.value;
+      const description = form.description.value
 
       const updatedService = {
          title,
@@ -60,6 +62,7 @@ const EditService = () => {
          price,
          shortDescription,
          facility: facilities,
+         description
       };
       console.log(updatedService);
       fetch(`http://localhost:5000/services/edit/${service._id}`, {
@@ -71,21 +74,20 @@ const EditService = () => {
       }).then(res => res.json()).then(data => {
          if (data.modifiedCount > 0) {
             toast.success("Service updated successfully!");
-            navigate('/services-dashboard');
+            navigate('/dashboard/services');
          }
       })
          .catch(err => console.error(err));
    }
    return (
       <div className="bg-white text-gray-900 md:py-7 px-4 md:px-10 font-Onset">
-         <div className="breadcrumbs text-sm flex justify-center items-center">
+         <div className="breadcrumbs text-sm flex items-center">
             <ul>
-               <li><Link to={'/services-dashboard'}>Services</Link></li>
-               <li><a href="#">Edit</a></li>
-               <li>{service.title}</li>
+               <Link to={"/dashboard/services"}>All Service</Link>
+               <li>Edit - {service.title}</li>
             </ul>
          </div>
-         <div className="p-10 mt-6 max-w-4xl mx-auto bg-gray-100 rounded-lg border border-gray-400/30">
+         <div className="p-5 mt-6 max-w-4xl mx-auto bg-gray-100 rounded-lg border border-gray-400/30">
             <form onSubmit={submitHandler} className="space-y-4">
                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>

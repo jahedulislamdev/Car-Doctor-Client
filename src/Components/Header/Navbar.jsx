@@ -10,10 +10,8 @@ const Navbar = () => {
    const { user, signOutUser } = useContext(AuthContext)
    const navLinks = <>
       <li><Link to={'/'}>Home</Link></li>
-      <li><Link>About</Link></li>
       <li><Link>Services</Link></li>
-      <li><Link to={""}>Dashboard</Link></li>
-      <li><Link to={"/orders"}>My Orders</Link></li>
+      <li><Link to={"/dashboard"}>Dashboard</Link></li>
       {user ? <li><button onClick={signOutUser}>Logout</button></li>
          : <li><Link to={'/signin'}>Login</Link></li>}
    </>

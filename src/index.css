@@ -7,3 +7,6 @@
     --font-Onset: "Onest", sans-serif;
     /* --font-Hind: "Hind Siliguri", sans-serif; */
 }
+.scrollbar-none {
+    scrollbar-width: none;
+}

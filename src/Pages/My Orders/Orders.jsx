@@ -1,15 +1,19 @@
 import { useLoaderData } from 'react-router';
 import { MdDelete } from 'react-icons/md';
+import { PiEyeThin } from 'react-icons/pi';
 
 const Orders = () => {
    const orderList = useLoaderData();
    console.log(orderList);
    return (
       <div className='bg-white text-gray-800'>
-         <h1 className="font-semibold text-3xl text-center py-4">Manage your Orders</h1>
-         {/* Orders */}
-
-         <div className="overflow-x-auto py-10">
+         <div className="breadcrumbs text-sm flex items-center">
+            <ul>
+               <li><a>Dashboard</a></li>
+               <li><a>All Order</a></li>
+            </ul>
+         </div>
+         <div className="overflow-x-auto py-3">
             <table className="table">
                {/* head */}
                <thead className=' text-gray-800 shadow'>
@@ -49,7 +53,7 @@ const Orders = () => {
                            <td>{<div className="text-sm opacity-90">${order.serviceCharge}</div>}</td>
                            <th>
                               <div className='flex items-center gap-2'>
-                                 <button className="btn btn-xs">Details</button>
+                                 <button className="bg-gray-600 text-white cursor-pointer p-1 rounded shadow"><PiEyeThin className='size-5' /></button>
                                  <button className='bg-red-500 text-white p-1 rounded cursor-pointer'><MdDelete className='size-5' /></button>
                               </div>
                            </th>
