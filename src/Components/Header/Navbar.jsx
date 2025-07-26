@@ -10,7 +10,7 @@ const Navbar = () => {
    const { user, signOutUser } = useContext(AuthContext)
    const navLinks = <>
       <li><Link to={'/'}>Home</Link></li>
-      <li><Link>Services</Link></li>
+      <li><Link to={'/all-service'}>Services</Link></li>
       <li><Link to={"/dashboard"}>Dashboard</Link></li>
       {user ? <li><button onClick={signOutUser}>Logout</button></li>
          : <li><Link to={'/signin'}>Login</Link></li>}
@@ -38,7 +38,7 @@ const Navbar = () => {
          <div className="navbar-end md:space-x-5 space-x-2 ">
             <Link><IoBagRemoveOutline className="size-5" /></Link>
             <Link><IoIosSearch className="size-5" /></Link>
-            <Link className="bg-[#e17f2996] btn btn-sm border-0 md:btn-md shadow-none text-black"> Appointment</Link>
+            <Link to={'/all-service'} className="bg-[#e17f2996] btn btn-sm border-0 md:btn-md shadow-none text-black"> Appointment</Link>
 
          </div>
       </div>

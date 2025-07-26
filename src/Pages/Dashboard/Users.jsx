@@ -1,6 +1,16 @@
+import { Link } from "react-router";
+
 const Users = () => {
+   const user = []
    return (
       <div className="overflow-auto max-h-[100vh] bg-white text-black">
+         <div className="breadcrumbs text-sm flex justify-between items-center">
+            <ul>
+               <li><Link to={'/dashboard'}>Dashboard</Link></li>
+               <li><a>Users</a></li>
+            </ul>
+            <p className='text-xs px-3 py-1 rounded-xl bg-orange-800 text-white'>Total Avilable User ( {user.length} )</p>
+         </div>
          <table className="table table-md">
             <thead className='text-black shadow sticky top-0 z-50 bg-gray-100 capitalize'>
                <tr>

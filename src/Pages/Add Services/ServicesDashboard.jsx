@@ -1,18 +1,46 @@
+import { useState } from 'react';
 import { MdDelete } from 'react-icons/md';
 import { TbEdit } from 'react-icons/tb';
 import { Link, useLoaderData } from 'react-router';
+import Swal from 'sweetalert2';
 
 const ServicesDashboard = () => {
-   const services = useLoaderData()
-   console.log(services);
+   const services = useLoaderData();
+   const [avilableServices, setAvilableServices] = useState(services);
+   const handleDeleteService = (serviceId) => {
+      Swal.fire({
+         title: "Are you sure?",
+         showCancelButton: true,
+         confirmButtonText: "Delete",
+         confirmButtonColor: '#d33',
+      }).then((result) => {
+         if (result.isConfirmed) {
+            fetch(`http://localhost:5000/service/${serviceId}`, {
+               method: "DELETE",
+               headers: {
+                  'Content-Type': 'application/json',
+               },
+            }).then(res => res.json()).then(data => {
+               if (data.deletedCount > 0) {
+                  setAvilableServices(prev => prev.filter(s => s._id !== serviceId));
+                  Swal.fire({
+                     title: "Order Deleted Successfully!",
+                     icon: "success"
+                  })
+               }
+            })
+         }
+      });
+   }
 
    return (
       <div className='bg-white text-gray-800'>
-         <div className="breadcrumbs text-sm flex items-center">
+         <div className="breadcrumbs text-sm flex justify-between items-center">
             <ul>
                <li><a>Dashboard</a></li>
                <li><a>All Service</a></li>
             </ul>
+            <p className='text-xs px-3 py-1 rounded-xl bg-orange-800 text-white'>Total Avilable Service ( {services.length} )</p>
          </div>
          <div className="overflow-x-auto py-3">
             <table className="table">
@@ -28,7 +56,7 @@ const ServicesDashboard = () => {
                </thead>
                <tbody>
                   {
-                     services.map((service, idx) => (
+                     avilableServices?.map((service, idx) => (
                         <tr key={service._id} className='hover:bg-gray-100 transition duration-300'>
                            <td className='uppercase'>{idx + 1}</td>
                            <td>
@@ -52,7 +80,7 @@ const ServicesDashboard = () => {
                            <th>
                               <div className='flex items-center gap-2'>
                                  <Link to={`/dashboard/services/edit/${service._id}`} className="bg-black text-white p-1 rounded cursor-pointer"><TbEdit className='size-5' /></Link>
-                                 <button className='bg-red-500 text-white p-1 rounded cursor-pointer'><MdDelete className='size-5' /></button>
+                                 <button onClick={() => handleDeleteService(service._id)} type='button' className='bg-red-500 text-white p-1 rounded cursor-pointer'><MdDelete className='size-5' /></button>
                               </div>
                            </th>
                            <th>

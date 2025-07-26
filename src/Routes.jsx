@@ -15,6 +15,7 @@ import EditService from "./Pages/Add Services/EditService";
 import Dashboard from "./Pages/Dashboard/Dashboard";
 import Overview from "./Pages/Dashboard/Overview";
 import Users from "./Pages/Dashboard/Users";
+import AllService from "./Pages/Add Services/AllService";
 
 const route = createBrowserRouter([
    {
@@ -40,6 +41,12 @@ const route = createBrowserRouter([
             path: '/services', element: <Services />,
             loader: () => fetch("http://localhost:5000/services"),
             hydrateFallbackElement: <Spinar />,
+         },
+         {
+            path: "/all-service", element: <AllService />,
+            loader: () => fetch("http://localhost:5000/services"),
+            hydrateFallbackElement: <Spinar />,
+
          },
          {
             path: '/service/:id', element: <ServiceDetail />,

@@ -2,9 +2,11 @@ import { useLoaderData } from 'react-router';
 import { MdDelete } from 'react-icons/md';
 import { PiEyeThin } from 'react-icons/pi';
 import Swal from 'sweetalert2';
+import { useState } from 'react';
 
 const Orders = () => {
-   const orderList = useLoaderData();
+   const orderList = useLoaderData() || [];
+   const [avilableOrders, setAvilableOrders] = useState(orderList);
 
    const handleDeleteOrder = (orderId) => {
       Swal.fire({
@@ -21,6 +23,7 @@ const Orders = () => {
                },
             }).then(res => res.json()).then(data => {
                if (data.deletedCount > 0) {
+                  setAvilableOrders(prev => prev.filter(o => o._id !== orderId));
                   Swal.fire({
                      title: "Order Deleted Successfully!"
                   })
@@ -33,11 +36,12 @@ const Orders = () => {
 
    return (
       <div className='bg-white text-gray-800'>
-         <div className="breadcrumbs text-sm flex items-center">
+         <div className="breadcrumbs text-sm flex justify-between items-center">
             <ul>
                <li><a>Dashboard</a></li>
-               <li><a>All Order({orderList.length})</a></li>
+               <li><a>All Order</a></li>
             </ul>
+            <p className='text-xs px-3 py-1 rounded-xl bg-orange-800 text-white'>Total Avilable Order ( {orderList.length} )</p>
          </div>
          <div className="overflow-x-auto py-3">
             <table className="table">
@@ -53,13 +57,13 @@ const Orders = () => {
                   </tr>
                </thead>
                <tbody>
-                  {orderList.length < 1 ?
+                  {avilableOrders?.length < 1 ?
                      <tr>
                         <td colSpan="7" className="text-center py-4 text-gray-500 text-xl font-medium">
                            Your order list is currently empty!
                         </td>
                      </tr> :
-                     orderList.map((order) => (
+                     avilableOrders?.map((order) => (
                         <tr key={order._id} className='hover:bg-gray-100 transition duration-300'>
                            <td className='uppercase'>{order._id.slice(-5)}</td>
                            <td>
