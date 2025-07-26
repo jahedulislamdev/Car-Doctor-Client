@@ -31,7 +31,7 @@ const Services = () => {
             ))}
          </div>
          <div className='flex justify-end '>
-            <Link to={'/'} className='mt-5 btn bg-orange-500 border-0'>Explore More</Link>
+            <Link to={'/all-service'} className='mt-5 btn bg-orange-500 border-0'>Explore More</Link>
          </div>
       </div>
 

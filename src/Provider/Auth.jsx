@@ -25,7 +25,7 @@ const Auth = ({ children }) => {
 
    // login with google 
    const googleAuthProvider = new GoogleAuthProvider();
-   const loginWithGoogle = (navigate) => {
+   const loginWithGoogle = (navigate, location) => {
       setLoading(true);
       signInWithPopup(auth, googleAuthProvider)
          .then(res => {
@@ -35,13 +35,13 @@ const Auth = ({ children }) => {
          .catch(err => toast.error(err))
          .finally(() => {
             setLoading(false)
-            navigate('/')
+            navigate(location.state ? location.state : '/')
          })
 
    }
    // login with facebook
    const facebookProvider = new FacebookAuthProvider();
-   const loginWithFacebook = (navigate) => {
+   const loginWithFacebook = (navigate, location) => {
       setLoading(true)
       signInWithPopup(auth, facebookProvider)
          .then(res => {
@@ -51,7 +51,7 @@ const Auth = ({ children }) => {
          .catch(err => toast.error(err))
          .finally(() => {
             setLoading(false)
-            navigate('/')
+            navigate(location.state ? location.state : '/')
          })
    }
 

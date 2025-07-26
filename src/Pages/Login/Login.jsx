@@ -1,6 +1,6 @@
 import { FaFacebook, FaLinkedin } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import loginBanner from '../../assets/images/login/login.svg';
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { useContext, useState } from "react";
@@ -17,6 +17,8 @@ const Login = () => {
    } = useContext(AuthContext);
 
    const navigate = useNavigate();
+   const location = useLocation();
+   console.log(location.state)
    const [showPass, setShowPass] = useState(false);
 
    // Handle form submit
@@ -30,7 +32,7 @@ const Login = () => {
             toast.success("Sign In successfully");
             setTimeout(() => {
                setUser(res.user);
-               navigate('/');
+               navigate(location.state ? location.state : '/');
             }, 400);
          })
          .catch(error => {
@@ -100,7 +102,7 @@ const Login = () => {
 
             <div className="flex justify-center gap-4">
                <button
-                  onClick={() => loginWithFacebook(navigate)}
+                  onClick={() => loginWithFacebook(navigate, location)}
                   className="p-3 bg-gray-200 rounded-full cursor-pointer"
                >
                   <FaFacebook className="text-xl text-primary" />
@@ -109,7 +111,7 @@ const Login = () => {
                   <FaLinkedin className="text-xl" />
                </button>
                <button
-                  onClick={() => loginWithGoogle(navigate)}
+                  onClick={() => loginWithGoogle(navigate, location)}
                   className="p-3 bg-gray-200 rounded-full cursor-pointer"
                >
                   <FcGoogle className="text-xl" />

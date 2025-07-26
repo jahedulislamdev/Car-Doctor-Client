@@ -5,7 +5,7 @@ import AuthContext from "../../Provider/context";
 import toast from "react-hot-toast";
 
 const SignUp = () => {
-   const { registrationWithEmail, setUser } = useContext(AuthContext);
+   const { registrationWithEmail, setUser, loading } = useContext(AuthContext);
    const navigate = useNavigate();
    const handleFormSubmit = (e) => {
       e.preventDefault();
@@ -78,7 +78,7 @@ const SignUp = () => {
                   type="submit"
                   className="w-full bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2 rounded-md transition duration-300"
                >
-                  Sign In
+                  {loading ? "Signing Up.." : "Sign Up"}
                </button>
             </form>
             <p className="text-sm text-center text-gray-600">

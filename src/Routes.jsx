@@ -16,6 +16,8 @@ import Dashboard from "./Pages/Dashboard/Dashboard";
 import Overview from "./Pages/Dashboard/Overview";
 import Users from "./Pages/Dashboard/Users";
 import AllService from "./Pages/Add Services/AllService";
+import Private from "./Private/Private";
+
 
 const route = createBrowserRouter([
    {
@@ -38,7 +40,7 @@ const route = createBrowserRouter([
             hydrateFallbackElement: <Spinar />
          },
          {
-            path: '/services', element: <Services />,
+            path: '/services', element: <Private><Services /></Private>,
             loader: () => fetch("http://localhost:5000/services"),
             hydrateFallbackElement: <Spinar />,
          },
@@ -60,12 +62,12 @@ const route = createBrowserRouter([
          },
 
          {
-            path: "/dashboard", element: <Dashboard />,
+            path: "/dashboard", element: <Private><Dashboard /></Private>,
             hydrateFallbackElement: <Spinar />,
             children: [
                {
                   index: true,
-                  element: <Overview />
+                  element: <Private><Overview /></Private>
                },
                {
                   path: "orders", element: <Orders />,

@@ -4,8 +4,8 @@ const AllService = () => {
    const services = useLoaderData();
 
    return (
-      <div className="max-w-7xl mx-auto px-2 md:px-12 py-12 bg-gray-100">
-         <h2 className="text-4xl font-extrabold text-center text-gray-900 mb-12 tracking-tight">💼 Explore Our Services</h2>
+      <div className="max-w-7xl mx-auto px-2 md:px-12 py-12 bg-gray-100 font-Onset">
+         <h2 className="text-4xl font-semibold text-center text-gray-900 mb-12 tracking-loose"> Explore Our Services</h2>
 
          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
             {
