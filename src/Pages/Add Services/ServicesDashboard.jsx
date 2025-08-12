@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useState } from 'react';
 import { MdDelete } from 'react-icons/md';
 import { TbEdit } from 'react-icons/tb';
@@ -15,20 +16,16 @@ const ServicesDashboard = () => {
          confirmButtonColor: '#d33',
       }).then((result) => {
          if (result.isConfirmed) {
-            fetch(`http://localhost:5000/service/${serviceId}`, {
-               method: "DELETE",
-               headers: {
-                  'Content-Type': 'application/json',
-               },
-            }).then(res => res.json()).then(data => {
-               if (data.deletedCount > 0) {
-                  setAvilableServices(prev => prev.filter(s => s._id !== serviceId));
-                  Swal.fire({
-                     title: "Order Deleted Successfully!",
-                     icon: "success"
-                  })
-               }
-            })
+            axios.delete(`http://localhost:5000/service/${serviceId}`)
+               .then(res => res.data).then(data => {
+                  if (data.deletedCount > 0) {
+                     setAvilableServices(prev => prev.filter(s => s._id !== serviceId));
+                     Swal.fire({
+                        title: "Order Deleted Successfully!",
+                        icon: "success"
+                     })
+                  }
+               })
          }
       });
    }

@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AuthContext from "./context";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, FacebookAuthProvider, signOut } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, FacebookAuthProvider, signOut, onAuthStateChanged } from "firebase/auth";
 import app from "../Firebase/config";
 import toast from "react-hot-toast";
 
@@ -37,7 +37,6 @@ const Auth = ({ children }) => {
             setLoading(false)
             navigate(location.state ? location.state : '/')
          })
-
    }
    // login with facebook
    const facebookProvider = new FacebookAuthProvider();
@@ -54,6 +53,15 @@ const Auth = ({ children }) => {
             navigate(location.state ? location.state : '/')
          })
    }
+
+   // auth observer
+   useEffect(() => {
+      const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+         setUser(currentUser);
+         setLoading(false);
+      })
+      return () => unsubscribe();
+   }, [auth]);
 
    // signout
    const signOutUser = (navigate) => {

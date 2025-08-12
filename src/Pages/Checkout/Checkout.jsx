@@ -1,7 +1,11 @@
 import { useLoaderData, useNavigate } from "react-router";
 import headingBackground from '../../assets/images/checkout/checkout.png'
 import toast from "react-hot-toast";
+import { useContext } from "react";
+import AuthContext from "../../Provider/context";
+import axios from "axios";
 const Checkout = () => {
+   const { user } = useContext(AuthContext)
    const checkedServices = useLoaderData();
    const navigate = useNavigate()
    const submitHandler = (e) => {
@@ -21,7 +25,7 @@ const Checkout = () => {
 
       const orderData = {
          customerName,
-         serviceDate,
+         serviceDate, // service date is not responding (you have to fix it later)
          contactNumber,
          emailAddress,
          message,
@@ -30,14 +34,8 @@ const Checkout = () => {
          serviceImg
       };
 
-      fetch("http://localhost:5000/orders", {
-         method: "POST",
-         headers: {
-            'Content-Type': 'application/json',
-         },
-         body: JSON.stringify(orderData),
-      })
-         .then(res => res.json())
+      axios.post("http://localhost:5000/orders", orderData, { withCredentials: true })
+         .then(res => res.data)
          .then(data => {
             if (data.insertedId) {
                toast.success("Order placed successfully!");
@@ -56,11 +54,7 @@ const Checkout = () => {
 
    return (
       <div className="bg-white text-gray-900 md:py-7 px-4 md:px-10 font-Onset">
-         <div className="h-40 flex items-center justify-center bg-white mb-4 rounded-lg" style={{ backgroundImage: `url(${headingBackground})`, backgroundSize: 'cover', opacity: 0.9, backgroundPosition: 'center' }}>
-            <div className="bg-gray-900/50 w-full h-full flex items-center justify-center text-white rounded-lg">
-               <h1 className="font-semibold text-3xl">Services Details</h1>
-            </div>
-         </div>
+         <h3 className="text-center text-xl font-semibold mb-5">Checkout Order</h3>
          <div className="breadcrumbs text-sm flex justify-center items-center">
             <ul>
                <li><a>Services</a></li>
@@ -107,11 +101,11 @@ const Checkout = () => {
                   <div>
                      <label className="label p-2">Email Address</label>
                      <input
-                        type="email"
                         name="emailAddress"
-                        placeholder="example@gmail.com"
+                        defaultValue={user?.email}
                         className="input bg-white input-bordered w-full"
                         required
+                        readOnly
                      />
                   </div>
                </div>

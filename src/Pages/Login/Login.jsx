@@ -6,6 +6,7 @@ import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { useContext, useState } from "react";
 import AuthContext from "../../Provider/context";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 const Login = () => {
    const {
@@ -18,7 +19,7 @@ const Login = () => {
 
    const navigate = useNavigate();
    const location = useLocation();
-   console.log(location.state)
+   // console.log(location.state)
    const [showPass, setShowPass] = useState(false);
 
    // Handle form submit
@@ -32,6 +33,9 @@ const Login = () => {
             toast.success("Sign In successfully");
             setTimeout(() => {
                setUser(res.user);
+               const loggedInUser = { email };
+               axios.post("http://localhost:5000/jwt", loggedInUser, { withCredentials: true })
+                  .then(res => res.data.success)
                navigate(location.state ? location.state : '/');
             }, 400);
          })

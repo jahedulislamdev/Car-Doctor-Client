@@ -17,6 +17,7 @@ import Overview from "./Pages/Dashboard/Overview";
 import Users from "./Pages/Dashboard/Users";
 import AllService from "./Pages/Add Services/AllService";
 import Private from "./Private/Private";
+import Bookings from "./Pages/My Bookings/Bookings";
 
 
 const route = createBrowserRouter([
@@ -58,6 +59,10 @@ const route = createBrowserRouter([
          {
             path: '/checkout/:id', element: <Checkout />,
             loader: ({ params }) => fetch(`http://localhost:5000/services/${params.id}`),
+            hydrateFallbackElement: <Spinar />
+         },
+         {
+            path: "/my-bookings", element: <Private> <Bookings /></Private>,
             hydrateFallbackElement: <Spinar />
          },
 

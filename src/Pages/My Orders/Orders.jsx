@@ -1,8 +1,9 @@
-import { useLoaderData } from 'react-router';
+import { Link, useLoaderData } from 'react-router';
 import { MdDelete } from 'react-icons/md';
 import { PiEyeThin } from 'react-icons/pi';
 import Swal from 'sweetalert2';
 import { useState } from 'react';
+import axios from 'axios';
 
 const Orders = () => {
    const orderList = useLoaderData() || [];
@@ -16,19 +17,15 @@ const Orders = () => {
          confirmButtonColor: '#d33',
       }).then((result) => {
          if (result.isConfirmed) {
-            fetch(`http://localhost:5000/order/${orderId}`, {
-               method: "DELETE",
-               headers: {
-                  'Content-Type': 'application/json',
-               },
-            }).then(res => res.json()).then(data => {
-               if (data.deletedCount > 0) {
-                  setAvilableOrders(prev => prev.filter(o => o._id !== orderId));
-                  Swal.fire({
-                     title: "Order Deleted Successfully!"
-                  })
-               }
-            })
+            axios.delete(`http://localhost:5000/order/${orderId}`)
+               .then(res => res.data).then(data => {
+                  if (data.deletedCount > 0) {
+                     setAvilableOrders(prev => prev.filter(o => o._id !== orderId));
+                     Swal.fire({
+                        title: "Order Deleted Successfully!"
+                     })
+                  }
+               })
 
          }
       });
@@ -38,7 +35,7 @@ const Orders = () => {
       <div className='bg-white text-gray-800'>
          <div className="breadcrumbs text-sm flex justify-between items-center">
             <ul>
-               <li><a>Dashboard</a></li>
+               <li><Link to={'/dashboard'}>Dashboard</Link></li>
                <li><a>All Order</a></li>
             </ul>
             <p className='text-xs px-3 py-1 rounded-xl bg-orange-800 text-white'>Total Avilable Order ( {orderList.length} )</p>
@@ -76,9 +73,10 @@ const Orders = () => {
                                     </div>
                                  </div>
                                  <div>
-                                    <div className="text-sm opacity-50 uppercase">{order.customerName}</div>
-                                    <div className="text-sm ">{order.serviceDate}</div>
+                                    <div className="text-sm opacity-70 uppercase">{order.customerName}</div>
+                                    <div className="text-sm opacity-50">{order.emailAddress}</div>
                                     <div className="font-bold badge badge-ghost badge-sm">{order.serviceName}</div>
+                                    {/* <div className="text-sm ">{order.serviceDate}</div> */}
                                  </div>
                               </div>
                            </td>

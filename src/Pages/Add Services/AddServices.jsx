@@ -99,7 +99,7 @@ const AddServices = () => {
                {/* Facility inputs */}
                <div className="border border-gray-300 p-4 rounded bg-gray-100">
                   <label className="label p-2 font-semibold">Facilities</label>
-                  <div className="md:flex justify-center items-center gap-4 space-y-3">
+                  <div className="md:flex justify-center items-center gap-4 space-y-3 md:space-y-0">
                      <input
                         type="text"
                         value={facilityName}
@@ -114,7 +114,7 @@ const AddServices = () => {
                         placeholder=" Facility Details"
                         className="input bg-white input-bordered w-full"
                      />
-                     <button type="button" onClick={addFacility} className="text-nowrap cursor-pointer bg-orange-500 hover:bg-orange-700 transition-colors duration-200 text-white px-4 py-2 rounded">
+                     <button type="button" onClick={addFacility} className=" py-2 px-3 text-nowrap cursor-pointer bg-orange-500 hover:bg-orange-700 transition-colors duration-200 text-white  rounded">
                         + Add Facility
                      </button>
                   </div>
