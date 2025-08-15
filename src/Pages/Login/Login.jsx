@@ -6,7 +6,6 @@ import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { useContext, useState } from "react";
 import AuthContext from "../../Provider/context";
 import toast from "react-hot-toast";
-import axios from "axios";
 
 const Login = () => {
    const {

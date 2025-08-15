@@ -1,11 +1,14 @@
-import { useContext } from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import AuthContext from "../Provider/context";
+import UseAuth from './../Hooks/useAuth';
+import Spinar from "../Components/Loading/Spinar";
 
 const Private = ({ children }) => {
    const location = useLocation();
-   const { user } = useContext(AuthContext);
+   const { user, loading } = UseAuth();
    // console.log(location.pathname)
+   if (loading) {
+      return <Spinar />
+   }
    if (user) {
       return children
    } else {

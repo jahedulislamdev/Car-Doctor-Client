@@ -57,7 +57,7 @@ const route = createBrowserRouter([
             hydrateFallbackElement: <Spinar />
          },
          {
-            path: '/checkout/:id', element: <Checkout />,
+            path: '/checkout/:id', element: <Private><Checkout /></Private>,
             loader: ({ params }) => fetch(`http://localhost:5000/services/${params.id}`),
             hydrateFallbackElement: <Spinar />
          },

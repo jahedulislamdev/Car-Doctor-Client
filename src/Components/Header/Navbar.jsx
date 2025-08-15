@@ -1,7 +1,7 @@
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { IoIosSearch } from "react-icons/io";
 import { IoBagRemoveOutline } from "react-icons/io5";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import logo from '../../assets/logo.svg'
 import UseAuth from "../../Hooks/useAuth";
 
@@ -11,14 +11,14 @@ const Navbar = () => {
    // nav Links
    const navLinks =
       <>
-         <li><Link to={'/'}>Home</Link></li>
-         <li><Link to={'/all-service'}>Services</Link></li>
+         <li><NavLink to={'/'}>Home</NavLink></li>
+         <li><NavLink to={'/all-service'}>Services</NavLink></li>
          {user ?
-            <> <li><Link to={"/dashboard"}>Dashboard</Link></li>
-               <li><Link to={"/my-bookings"}>My Bookings</Link></li>
+            <> <li><NavLink to={"/dashboard"}>Dashboard</NavLink></li>
+               <li><NavLink to={"/my-bookings"}>My Bookings</NavLink></li>
                <li><button onClick={() => signOutUser(navigate)}>Logout</button></li>
             </>
-            : <li><Link to={'/signin'}>Login</Link></li>}
+            : <li><NavLink to={'/signin'}>Login</NavLink></li>}
       </>
    return (
       <div className="navbar bg-gray-50/90 text-black shadow-sm font-Onset md:px-6 sticky top-0 z-50">

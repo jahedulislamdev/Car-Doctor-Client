@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 
 
 const Auth = ({ children }) => {
-   const [loading, setLoading] = useState(false);
+   const [loading, setLoading] = useState(true);
    const [user, setUser] = useState(null);
 
    // getauth app
@@ -82,9 +82,34 @@ const Auth = ({ children }) => {
       });
    };
 
+   // automatic sign out if an unauthorized user try to access another user's data
+   const autoLogout = (navigate) => {
+      signOut(auth)
+         .then(() => {
+            setUser(null);
+            toast('Logout, Access Forbidden!', {
+               icon: '⚠️',
+               style: {
+                  border: '1px solid #FFA500',
+                  padding: '13px',
+                  color: '#333',
+                  background: '#FFF3CD',
+               },
+            });
+            navigate('/signin');
+         })
+         .catch(err => toast.error(`An Error occurred: ${err.message}`))
+         .finally(() => {
+            setLoading(false);
+         });
+   }
+
+
    // auth observer
    useEffect(() => {
+      setLoading(true);
       const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+         setLoading(true)
          const userMail = currentUser?.email || user?.email;
          const loggedUser = { email: userMail };
          setUser(currentUser);
@@ -93,23 +118,24 @@ const Auth = ({ children }) => {
          if (currentUser) {
             axios.post("http://localhost:5000/jwt", loggedUser, { withCredentials: true })
                .then(res => console.log(res.data))
-               .catch(err => console.error("Error sending JWT token:", err));
+               .catch(err => console.error("Error sending JWT token:", err))
+               .finally(() => setLoading(false))
          } else {
             axios.post("http://localhost:5000/logout", loggedUser, { withCredentials: true })
                .then(res => console.log("User logged out on server", res.data))
-               .catch(err => console.error("Error logging out:", err));
+               .catch(err => console.error("Error logging out:", err))
+               .finally(() => setLoading(false));
          }
-         setLoading(false);
       })
       return () => unsubscribe();
-   }, [user?.email, auth]);
+   }, [auth, user?.email]);
 
    // provided data
    const providedData = {
       user, setUser,
       loading, setLoading,
       registrationWithEmail, loginWithEmail, loginWithGoogle, loginWithFacebook,
-      signOutUser
+      signOutUser, autoLogout
    }
    return (
       <AuthContext.Provider value={providedData}>
