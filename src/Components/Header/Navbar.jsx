@@ -1,13 +1,13 @@
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { IoIosSearch } from "react-icons/io";
 import { IoBagRemoveOutline } from "react-icons/io5";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from '../../assets/logo.svg'
-import { useContext } from "react";
-import AuthContext from "../../Provider/context";
+import UseAuth from "../../Hooks/useAuth";
 
 const Navbar = () => {
-   const { user, signOutUser } = useContext(AuthContext)
+   const { user, signOutUser } = UseAuth();
+   const navigate = useNavigate();
    // nav Links
    const navLinks =
       <>
@@ -16,7 +16,7 @@ const Navbar = () => {
          {user ?
             <> <li><Link to={"/dashboard"}>Dashboard</Link></li>
                <li><Link to={"/my-bookings"}>My Bookings</Link></li>
-               <li><button onClick={signOutUser}>Logout</button></li>
+               <li><button onClick={() => signOutUser(navigate)}>Logout</button></li>
             </>
             : <li><Link to={'/signin'}>Login</Link></li>}
       </>
@@ -44,7 +44,6 @@ const Navbar = () => {
             <Link><IoBagRemoveOutline className="size-5" /></Link>
             <Link><IoIosSearch className="size-5" /></Link>
             <Link to={'/all-service'} className="bg-[#e17f2996] btn btn-sm border-0 md:btn-md shadow-none text-black"> Appointment</Link>
-
          </div>
       </div>
    );

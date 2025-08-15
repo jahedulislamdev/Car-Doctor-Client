@@ -1,6 +1,4 @@
 import { FaCarSide } from 'react-icons/fa';
-
-
 const Spinar = () => {
    return (
       <div className="flex bg-white flex-col items-center justify-center h-screen space-y-4">

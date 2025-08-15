@@ -33,9 +33,6 @@ const Login = () => {
             toast.success("Sign In successfully");
             setTimeout(() => {
                setUser(res.user);
-               const loggedInUser = { email };
-               axios.post("http://localhost:5000/jwt", loggedInUser, { withCredentials: true })
-                  .then(res => res.data.success)
                navigate(location.state ? location.state : '/');
             }, 400);
          })

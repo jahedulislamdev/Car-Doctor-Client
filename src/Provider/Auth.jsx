@@ -3,6 +3,9 @@ import AuthContext from "./context";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, FacebookAuthProvider, signOut, onAuthStateChanged } from "firebase/auth";
 import app from "../Firebase/config";
 import toast from "react-hot-toast";
+import axios from "axios";
+import Swal from "sweetalert2";
+
 
 const Auth = ({ children }) => {
    const [loading, setLoading] = useState(false);
@@ -31,13 +34,14 @@ const Auth = ({ children }) => {
          .then(res => {
             setUser(res.user)
             toast.success("Login Successfully!")
+            navigate(location.state ? location.state : '/')
          })
          .catch(err => toast.error(err))
          .finally(() => {
             setLoading(false)
-            navigate(location.state ? location.state : '/')
          })
    }
+
    // login with facebook
    const facebookProvider = new FacebookAuthProvider();
    const loginWithFacebook = (navigate, location) => {
@@ -46,37 +50,59 @@ const Auth = ({ children }) => {
          .then(res => {
             setUser(res.user)
             toast.success("Login Successfully!")
+            navigate(location.state ? location.state : '/')
          })
          .catch(err => toast.error(err))
          .finally(() => {
             setLoading(false)
-            navigate(location.state ? location.state : '/')
          })
    }
+   // signout
+   const signOutUser = (navigate) => {
+      Swal.fire({
+         title: "Do you want to log out?",
+         showCancelButton: true,
+         confirmButtonText: "Yes",
+         confirmButtonColor: 'green',
+         background: '#daf2f2',
+      }).then((result) => {
+         if (result.isConfirmed) {
+            setLoading(true);
+            signOut(auth)
+               .then(() => {
+                  setUser(null);
+                  toast.success("Logout Successfully!");
+                  navigate('/');
+               })
+               .catch(err => toast.error(`Signout failed: ${err.message}`))
+               .finally(() => {
+                  setLoading(false);
+               });
+         }
+      });
+   };
 
    // auth observer
    useEffect(() => {
       const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+         const userMail = currentUser?.email || user?.email;
+         const loggedUser = { email: userMail };
          setUser(currentUser);
+
+         // send jwt token to server
+         if (currentUser) {
+            axios.post("http://localhost:5000/jwt", loggedUser, { withCredentials: true })
+               .then(res => console.log(res.data))
+               .catch(err => console.error("Error sending JWT token:", err));
+         } else {
+            axios.post("http://localhost:5000/logout", loggedUser, { withCredentials: true })
+               .then(res => console.log("User logged out on server", res.data))
+               .catch(err => console.error("Error logging out:", err));
+         }
          setLoading(false);
       })
       return () => unsubscribe();
-   }, [auth]);
-
-   // signout
-   const signOutUser = (navigate) => {
-      setLoading(true)
-      signOut(auth)
-         .then(() => {
-            setUser(null);
-            toast.success("Logout Successfully!")
-         })
-         .catch(err => toast.error("signout faild", err))
-         .finally(() => {
-            setLoading(false)
-            navigate('/');
-         })
-   }
+   }, [user?.email, auth]);
 
    // provided data
    const providedData = {
