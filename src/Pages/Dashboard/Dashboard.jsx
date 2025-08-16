@@ -1,4 +1,4 @@
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import UseAuth from "../../Hooks/useAuth";
 
 const dashboardLinks = [
@@ -27,8 +27,8 @@ const Dashboard = () => {
          {/* Sidebar (icons-only on mobile, expanded on md+) */}
          <aside className="fixed inset-y-0 left-0 w-16 md:w-64 bg-white border-r shadow-sm z-20">
             {/* Brand (only show on md+) */}
-            <div className="h-16 hidden md:flex items-center justify-center border-b">
-               <h2 className="text-xl font-semibold text-gray-700">Admin Panel</h2>
+            <div className="h-16 hidden md:flex ps-6 items-center justify-start border-b">
+               <Link to={'/dashboard'} className="text-xl font-semibold text-gray-700">Admin Panel</Link>
             </div>
 
             {/* Nav */}
@@ -41,8 +41,7 @@ const Dashboard = () => {
                            title={link.name}            // desktop tooltip
                            aria-label={link.name}       // a11y for icon-only
                            className={({ isActive }) =>
-                              `group mx-2 flex items-center gap-3 rounded-lg px-3 py-2 transition-colors
-                    ${isActive
+                              `group mx-2 flex items-center gap-3 rounded-lg px-3 py-2 transition-colors ${isActive
                                  ? "bg-orange-100 text-orange-700"
                                  : "text-gray-700 hover:bg-gray-50 hover:text-orange-600"}`
                            }

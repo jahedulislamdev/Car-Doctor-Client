@@ -9,7 +9,7 @@ const Users = () => {
                <li><Link to={'/dashboard'}>Dashboard</Link></li>
                <li><a>Users</a></li>
             </ul>
-            <p className='text-xs px-3 py-1 rounded-xl bg-orange-800 text-white'>Total Avilable User ( {user.length} )</p>
+            <p className='text-[7px] md:text-xs p-1 md:px-3 md:py-1 rounded-xl bg-orange-800 text-white'>Total Avilable User ( {user.length} )</p>
          </div>
          <table className="table table-md">
             <thead className='text-black shadow sticky top-0 z-50 bg-gray-100 capitalize'>

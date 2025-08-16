@@ -26,7 +26,6 @@ const Orders = () => {
                      })
                   }
                })
-
          }
       });
    }
@@ -38,7 +37,7 @@ const Orders = () => {
                <li><Link to={'/dashboard'}>Dashboard</Link></li>
                <li><a>All Order</a></li>
             </ul>
-            <p className='text-xs px-3 py-1 rounded-xl bg-orange-800 text-white'>Total Avilable Order ( {orderList.length} )</p>
+            <p className='text-[7px] md:text-xs p-1 md:px-3 md:py-1 rounded-xl bg-orange-800 text-white'>Total Avilable Order ( {orderList.length} )</p>
          </div>
          <div className="overflow-x-auto py-3">
             <table className="table">
