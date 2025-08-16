@@ -17,7 +17,7 @@ const Orders = () => {
          confirmButtonColor: '#d33',
       }).then((result) => {
          if (result.isConfirmed) {
-            axios.delete(`http://localhost:5000/order/${orderId}`)
+            axios.delete(`https://car-doctor-server-2k6l.onrender.com/order/${orderId}`)
                .then(res => res.data).then(data => {
                   if (data.deletedCount > 0) {
                      setAvilableOrders(prev => prev.filter(o => o._id !== orderId));

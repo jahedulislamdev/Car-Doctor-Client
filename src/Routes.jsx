@@ -29,7 +29,7 @@ const route = createBrowserRouter([
       children: [
          {
             path: '/', element: <App />,
-            loader: () => fetch('http://localhost:5000/services'),
+            loader: () => fetch('https://car-doctor-server-2k6l.onrender.com/services'),
             hydrateFallbackElement: <Spinar />
          },
          {
@@ -42,23 +42,23 @@ const route = createBrowserRouter([
          },
          {
             path: '/services', element: <Private><Services /></Private>,
-            loader: () => fetch("http://localhost:5000/services"),
+            loader: () => fetch("https://car-doctor-server-2k6l.onrender.com/services"),
             hydrateFallbackElement: <Spinar />,
          },
          {
             path: "/all-service", element: <AllService />,
-            loader: () => fetch("http://localhost:5000/services"),
+            loader: () => fetch("https://car-doctor-server-2k6l.onrender.com/services"),
             hydrateFallbackElement: <Spinar />,
 
          },
          {
             path: '/service/:id', element: <ServiceDetail />,
-            loader: ({ params }) => fetch(`http://localhost:5000/services/${params.id}`),
+            loader: ({ params }) => fetch(`https://car-doctor-server-2k6l.onrender.com/services/${params.id}`),
             hydrateFallbackElement: <Spinar />
          },
          {
             path: '/checkout/:id', element: <Private><Checkout /></Private>,
-            loader: ({ params }) => fetch(`http://localhost:5000/services/${params.id}`),
+            loader: ({ params }) => fetch(`https://car-doctor-server-2k6l.onrender.com/services/${params.id}`),
             hydrateFallbackElement: <Spinar />
          },
          {
@@ -76,7 +76,7 @@ const route = createBrowserRouter([
                },
                {
                   path: "orders", element: <Orders />,
-                  loader: () => fetch("http://localhost:5000/orders"),
+                  loader: () => fetch("https://car-doctor-server-2k6l.onrender.com/orders"),
                   hydrateFallbackElement: <Spinar />
                },
                {
@@ -85,12 +85,12 @@ const route = createBrowserRouter([
                },
                {
                   path: "services", element: <ServicesDashboard />,
-                  loader: () => fetch("http://localhost:5000/services"),
+                  loader: () => fetch("https://car-doctor-server-2k6l.onrender.com/services"),
                   hydrateFallbackElement: <Spinar />
                },
                {
                   path: 'services/edit/:id', element: <EditService />,
-                  loader: ({ params }) => fetch(`http://localhost:5000/services/${params.id}`),
+                  loader: ({ params }) => fetch(`https://car-doctor-server-2k6l.onrender.com/services/${params.id}`),
                   hydrateFallbackElement: <Spinar />
                },
                {

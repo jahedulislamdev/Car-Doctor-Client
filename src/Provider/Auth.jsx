@@ -116,12 +116,12 @@ const Auth = ({ children }) => {
 
          // send jwt token to server
          if (currentUser) {
-            axios.post("http://localhost:5000/jwt", loggedUser, { withCredentials: true })
+            axios.post("https://car-doctor-server-2k6l.onrender.com/jwt", loggedUser, { withCredentials: true })
                .then(res => console.log(res.data))
                .catch(err => console.error("Error sending JWT token:", err))
                .finally(() => setLoading(false))
          } else {
-            axios.post("http://localhost:5000/logout", loggedUser, { withCredentials: true })
+            axios.post("https://car-doctor-server-2k6l.onrender.com/logout", loggedUser, { withCredentials: true })
                .then(res => console.log("User logged out on server", res.data))
                .catch(err => console.error("Error logging out:", err))
                .finally(() => setLoading(false));

@@ -65,7 +65,7 @@ const EditService = () => {
          description
       };
       console.log(updatedService);
-      fetch(`http://localhost:5000/services/edit/${service._id}`, {
+      fetch(`https://car-doctor-server-2k6l.onrender.com/services/edit/${service._id}`, {
          method: "PUT",
          headers: {
             'Content-Type': 'application/json',

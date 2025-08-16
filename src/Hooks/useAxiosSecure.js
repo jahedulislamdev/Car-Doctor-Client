@@ -4,7 +4,7 @@ import UseAuth from "./useAuth";
 import { useNavigate } from "react-router";
 
 const instance = axios.create({
-    baseURL: "http://localhost:5000",
+    baseURL: "https://car-doctor-server-2k6l.onrender.com",
     withCredentials: true,
 });
 const useAxiosSecure = () => {

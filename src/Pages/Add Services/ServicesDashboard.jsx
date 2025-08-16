@@ -16,7 +16,7 @@ const ServicesDashboard = () => {
          confirmButtonColor: '#d33',
       }).then((result) => {
          if (result.isConfirmed) {
-            axios.delete(`http://localhost:5000/service/${serviceId}`)
+            axios.delete(`https://car-doctor-server-2k6l.onrender.com/service/${serviceId}`)
                .then(res => res.data).then(data => {
                   if (data.deletedCount > 0) {
                      setAvilableServices(prev => prev.filter(s => s._id !== serviceId));

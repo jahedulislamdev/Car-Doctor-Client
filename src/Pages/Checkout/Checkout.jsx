@@ -34,7 +34,7 @@ const Checkout = () => {
          serviceImg
       };
 
-      axios.post("http://localhost:5000/orders", orderData, { withCredentials: true })
+      axios.post("https://car-doctor-server-2k6l.onrender.com/orders", orderData, { withCredentials: true })
          .then(res => res.data)
          .then(data => {
             if (data.insertedId) {

@@ -48,7 +48,7 @@ const AddServices = () => {
       };
 
       console.log("New Service Added", newService);
-      fetch("http://localhost:5000/services", {
+      fetch("https://car-doctor-server-2k6l.onrender.com/services", {
          method: "POST",
          headers: {
             'Content-Type': 'application/json',
