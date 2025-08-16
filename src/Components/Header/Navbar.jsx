@@ -21,7 +21,7 @@ const Navbar = () => {
             : <li><NavLink to={'/signin'}>Login</NavLink></li>}
       </>
    return (
-      <div className="navbar bg-gray-50/90 text-black shadow-sm font-Onset md:px-6 sticky top-0 z-50">
+      <div className="navbar bg-white text-black shadow-sm font-Onset md:px-6 sticky top-0 z-50">
          <div className="navbar-start">
             <div className="dropdown">
                <div tabIndex={0} role="button" className=" opacity-60 lg:hidden me-2">

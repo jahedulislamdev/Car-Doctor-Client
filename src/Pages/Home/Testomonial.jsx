@@ -1,10 +1,9 @@
-import quote from '../../assets/icons/quote.svg'
+import quote from '../../assets/icons/quote.svg';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Autoplay } from 'swiper/modules';
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/free-mode';
-import 'swiper/css/navigation';
 import { FaRegStar, FaStar } from 'react-icons/fa';
 import { FaRegStarHalfStroke } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
@@ -61,41 +60,57 @@ const Testimonial = () => {
    return (
       <Swiper
          loop={true}
-         speed={3000}
+         speed={1200}
          autoplay={{
             delay: 2500,
             disableOnInteraction: false,
          }}
-         breakpoints={{
-            400: { slidesPerView: 1, spaceBetween: 30 },
-            401: { slidesPerView: 2, spaceBetween: 30 },
-
+         breakpoints={{  // larger mobiles
+            640: { slidesPerView: 1, spaceBetween: 20 },   // tablets
+            1024: { slidesPerView: 2, spaceBetween: 30 },  // laptops
+            1280: { slidesPerView: 3, spaceBetween: 30 },  // desktops
          }}
          modules={[FreeMode, Autoplay]}
-         className="mySwiper2 "
+         className="mySwiper2"
       >
-         {
-            testimonials.map(tes =>
-               <SwiperSlide key={tes.id} className='md:p-8 p-4 rounded-lg bg-gray-200/40'>
-                  <Link>
-                     <div className='flex justify-between items-center space-x-5 md:mb-10 mb-4'>
-                        <div className='flex items-center gap-4'>
-                           <img className='rounded-full w-12 h-12' src={tes.image} alt="" />
-                           <div>
-                              <p className='font-semibold text-md sm:text-lg'>{tes.name}</p>
-                              <p className='text-xs md:text-sm font-light text-left'>{tes.role}</p>
-                           </div>
+         {testimonials.map((tes) => (
+            <SwiperSlide
+               key={tes.id}
+               className="md:p-8 p-4 rounded-lg bg-gray-200/40 shadow-md hover:shadow-lg transition"
+            >
+               <Link>
+                  <div className="flex justify-between items-center space-x-5 md:mb-10 mb-4">
+                     <div className="flex items-center gap-4">
+                        <img
+                           className="rounded-full w-12 h-12 object-cover"
+                           src={tes.image}
+                           alt={tes.name}
+                        />
+                        <div>
+                           <p className="font-semibold text-md sm:text-lg">{tes.name}</p>
+                           <p className="text-xs md:text-sm font-light text-left">{tes.role}</p>
                         </div>
-                        <img className='w-8' src={quote} />
                      </div>
-                     <p className='text-gray-800/80 text-left text-sm sm:text-lg max-h-24 sm:max-h-40 overflow-hidden'>{tes.message.slice(0, 170) + "..."}</p>
-                     <div className='flex items-center justify-between sm:mt-9 mt-5'>
-                        <p className='flex space-x-2 text-yellow-600'><FaStar /><FaStar /><FaStar /><FaRegStarHalfStroke /><FaRegStar /></p>
-                        <p className='text-gray-700/60 font-light'>{tes.date}</p>
-                     </div>
-                  </Link>
-               </SwiperSlide>)
-         }
+                     <img className="w-8" src={quote} alt="quote" />
+                  </div>
+
+                  <p className="text-gray-800/80 text-left text-sm sm:text-base max-h-24 sm:max-h-40 overflow-hidden">
+                     {tes.message.slice(0, 170) + "..."}
+                  </p>
+
+                  <div className="flex items-center justify-between sm:mt-9 mt-5">
+                     <p className="flex space-x-2 text-yellow-600">
+                        <FaStar />
+                        <FaStar />
+                        <FaStar />
+                        <FaRegStarHalfStroke />
+                        <FaRegStar />
+                     </p>
+                     <p className="text-gray-700/60 font-light">{tes.date}</p>
+                  </div>
+               </Link>
+            </SwiperSlide>
+         ))}
       </Swiper>
    );
 };
